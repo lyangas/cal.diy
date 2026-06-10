@@ -68,6 +68,7 @@ export const apiHandlers = {
   stripepayment: import("./stripepayment/api"),
   sylapsvideo: import("./sylapsvideo/api"),
   tandemvideo: import("./tandemvideo/api"),
+  telemostvideo: import("./telemostvideo/api"),
   telegram: import("./telegram/api"),
   basic: import("./templates/basic/api"),
   "booking-pages-tag": import("./templates/booking-pages-tag/api"),

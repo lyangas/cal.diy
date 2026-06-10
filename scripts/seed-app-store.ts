@@ -165,6 +165,18 @@ export default async function main() {
     });
   }
   await createApp("jitsi", "jitsivideo", ["conferencing"], "jitsi_video");
+  await createApp(
+    "telemost",
+    "telemostvideo",
+    ["conferencing"],
+    "telemost_video",
+    process.env.TELEMOST_CLIENT_ID && process.env.TELEMOST_CLIENT_SECRET
+      ? {
+          client_id: process.env.TELEMOST_CLIENT_ID,
+          client_secret: process.env.TELEMOST_CLIENT_SECRET,
+        }
+      : undefined
+  );
   // Other apps
   if (process.env.HUBSPOT_CLIENT_ID && process.env.HUBSPOT_CLIENT_SECRET) {
     await createApp("hubspot", "hubspot", ["crm"], "hubspot_other_calendar", {

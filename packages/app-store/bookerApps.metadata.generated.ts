@@ -38,6 +38,7 @@ import sirius_video_config_json from "./sirius_video/config.json";
 import skype_config_json from "./skype/config.json";
 import sylapsvideo_config_json from "./sylapsvideo/config.json";
 import { metadata as tandemvideo__metadata_ts } from "./tandemvideo/_metadata";
+import { metadata as telemostvideo__metadata_ts } from "./telemostvideo/_metadata";
 import telegram_config_json from "./telegram/config.json";
 import booking_pages_tag_config_json from "./templates/booking-pages-tag/config.json";
 import event_type_location_video_static_config_json from "./templates/event-type-location-video-static/config.json";
@@ -84,6 +85,7 @@ export const appStoreMetadata = {
   skype: skype_config_json,
   sylapsvideo: sylapsvideo_config_json,
   tandemvideo: tandemvideo__metadata_ts,
+  telemostvideo: telemostvideo__metadata_ts,
   telegram: telegram_config_json,
   "booking-pages-tag": booking_pages_tag_config_json,
   "event-type-location-video-static": event_type_location_video_static_config_json,

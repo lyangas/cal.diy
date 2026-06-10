@@ -1,0 +1,14 @@
+{
+  "private": true,
+  "name": "@calcom/telemostvideo",
+  "version": "0.0.0",
+  "main": "./index.ts",
+  "description": "Yandex Telemost is a video conferencing service by Yandex 360. Create video meetings with a unique join link for every booking. Requires a Yandex 360 for Business account.",
+  "dependencies": {
+    "@calcom/lib": "workspace:*",
+    "@calcom/prisma": "workspace:*"
+  },
+  "devDependencies": {
+    "@calcom/types": "workspace:*"
+  }
+}
