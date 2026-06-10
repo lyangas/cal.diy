@@ -1,0 +1,302 @@
+/* ============================================================
+   Booking page styles — visual themes for the public booker.
+
+   Activated by <html data-booking-style="…">, set in
+   BookerWebWrapper from the owner's choice in
+   Settings → My account → Appearance ("Booking page style").
+
+   Styles: classic (default cal.com look — no rules here),
+   brutalist, aurora, editorial, terminal.
+
+   Selectors use html[data-booking-style=…] (specificity 0,1,1)
+   so token overrides beat both :root and .dark (0,1,0).
+   Google Fonts are injected as <link> by BookerWebWrapper.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   BRUTALIST — neo-brutalism: stark white, heavy black borders,
+   zero radius, hard offset shadows, yellow accent, Space Grotesk
+   ------------------------------------------------------------ */
+html[data-booking-style="brutalist"] {
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-cal: "Space Grotesk", system-ui, sans-serif;
+
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-cal-sm: 0px;
+  --radius-cal: 0px;
+  --radius-cal-md: 0px;
+  --radius-cal-lg: 0px;
+  --radius-cal-xl: 0px;
+  --radius-cal-2xl: 0px;
+  --radius-cal-3xl: 0px;
+
+  --cal-bg: #ffffff;
+  --cal-bg-subtle: #f4f4f4;
+  --cal-bg-muted: #ffffff;
+  --cal-bg-emphasis: #ffde00;
+  --cal-bg-inverted: #0a0a0a;
+
+  --cal-text: #0a0a0a;
+  --cal-text-emphasis: #000000;
+  --cal-text-subtle: #2b2b2b;
+  --cal-text-muted: #4d4d4d;
+  --cal-text-inverted: #ffffff;
+
+  --cal-border: #0a0a0a;
+  --cal-border-subtle: #0a0a0a;
+  --cal-border-muted: #0a0a0a;
+  --cal-border-emphasis: #0a0a0a;
+  --cal-border-booker: #0a0a0a;
+  --cal-border-booker-width: 3px;
+
+  --cal-brand: #ffde00 !important;
+  --cal-brand-emphasis: #f0c800 !important;
+  --cal-brand-text: #0a0a0a !important;
+  --cal-brand-accent: #0a0a0a !important;
+}
+html[data-booking-style="brutalist"] body {
+  font-family: var(--font-sans) !important;
+  background: #f4f4f0;
+}
+html[data-booking-style="brutalist"] [data-testid="booker-container"] {
+  border: 3px solid #0a0a0a !important;
+  box-shadow: 10px 10px 0 0 #0a0a0a !important;
+}
+html[data-booking-style="brutalist"] [class*="shadow"] {
+  box-shadow: 4px 4px 0 0 #0a0a0a !important;
+}
+html[data-booking-style="brutalist"] button {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+html[data-booking-style="brutalist"] h1,
+html[data-booking-style="brutalist"] h2,
+html[data-booking-style="brutalist"] [data-testid="event-title"] {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------
+   AURORA — glassmorphism over a deep-space gradient: translucent
+   blurred panels, big radii, violet accent, Outfit font
+   ------------------------------------------------------------ */
+html[data-booking-style="aurora"] {
+  --font-sans: "Outfit", system-ui, sans-serif;
+  --font-cal: "Outfit", system-ui, sans-serif;
+
+  --radius: 1rem;
+  --radius-sm: 0.625rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.75rem;
+  --radius-3xl: 2.25rem;
+  --radius-cal-sm: 0.625rem;
+  --radius-cal: 0.75rem;
+  --radius-cal-md: 0.875rem;
+  --radius-cal-lg: 1rem;
+  --radius-cal-xl: 1.25rem;
+  --radius-cal-2xl: 1.75rem;
+  --radius-cal-3xl: 2.25rem;
+
+  --cal-bg: rgba(22, 18, 48, 0.72);
+  --cal-bg-subtle: rgba(255, 255, 255, 0.07);
+  --cal-bg-muted: rgba(22, 18, 48, 0.55);
+  --cal-bg-emphasis: rgba(139, 92, 246, 0.28);
+  --cal-bg-inverted: #f0eeff;
+
+  --cal-text: #ece9ff;
+  --cal-text-emphasis: #ffffff;
+  --cal-text-subtle: #bcb6e6;
+  --cal-text-muted: #8d86c4;
+  --cal-text-inverted: #16113a;
+
+  --cal-border: rgba(255, 255, 255, 0.16);
+  --cal-border-subtle: rgba(255, 255, 255, 0.12);
+  --cal-border-muted: rgba(255, 255, 255, 0.1);
+  --cal-border-emphasis: rgba(255, 255, 255, 0.35);
+  --cal-border-booker: rgba(255, 255, 255, 0.18);
+  --cal-border-booker-width: 1px;
+
+  --cal-brand: #8b5cf6 !important;
+  --cal-brand-emphasis: #a78bfa !important;
+  --cal-brand-text: #ffffff !important;
+  --cal-brand-accent: #22d3ee !important;
+}
+html[data-booking-style="aurora"] body {
+  font-family: var(--font-sans) !important;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 45%, #24243e 100%) fixed;
+  color-scheme: dark;
+}
+html[data-booking-style="aurora"] [data-testid="booker-container"] {
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 24px 70px rgba(76, 29, 149, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+/* Glass for floating layers (dropdowns, dialogs, tooltips) */
+html[data-booking-style="aurora"] [data-radix-popper-content-wrapper] > *,
+html[data-booking-style="aurora"] [role="dialog"] {
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+}
+
+/* ------------------------------------------------------------
+   EDITORIAL — print magazine: cream paper, ink text, hairline
+   rules, serif headlines (Playfair Display) + Lora body
+   ------------------------------------------------------------ */
+html[data-booking-style="editorial"] {
+  --font-sans: "Lora", Georgia, serif;
+  --font-cal: "Playfair Display", Georgia, serif;
+
+  --radius: 0.125rem;
+  --radius-sm: 0px;
+  --radius-md: 0.125rem;
+  --radius-lg: 0.125rem;
+  --radius-xl: 0.25rem;
+  --radius-2xl: 0.25rem;
+  --radius-3xl: 0.25rem;
+  --radius-cal-sm: 0px;
+  --radius-cal: 0.125rem;
+  --radius-cal-md: 0.125rem;
+  --radius-cal-lg: 0.125rem;
+  --radius-cal-xl: 0.25rem;
+  --radius-cal-2xl: 0.25rem;
+  --radius-cal-3xl: 0.25rem;
+
+  --cal-bg: #faf6ee;
+  --cal-bg-subtle: #f3ecdd;
+  --cal-bg-muted: #f7f1e4;
+  --cal-bg-emphasis: #ece1cb;
+  --cal-bg-inverted: #1f1a15;
+
+  --cal-text: #1f1a15;
+  --cal-text-emphasis: #120e0a;
+  --cal-text-subtle: #5a5247;
+  --cal-text-muted: #84796a;
+  --cal-text-inverted: #faf6ee;
+
+  --cal-border: #d9cdb6;
+  --cal-border-subtle: #e2d8c4;
+  --cal-border-muted: #e8dfcd;
+  --cal-border-emphasis: #1f1a15;
+  --cal-border-booker: #1f1a15;
+  --cal-border-booker-width: 1px;
+
+  --cal-brand: #7a2828 !important;
+  --cal-brand-emphasis: #5e1d1d !important;
+  --cal-brand-text: #faf6ee !important;
+  --cal-brand-accent: #7a2828 !important;
+}
+html[data-booking-style="editorial"] body {
+  font-family: var(--font-sans) !important;
+  background: #f3ecdd;
+}
+html[data-booking-style="editorial"] h1,
+html[data-booking-style="editorial"] h2,
+html[data-booking-style="editorial"] h3,
+html[data-booking-style="editorial"] [data-testid="event-title"] {
+  font-family: "Playfair Display", Georgia, serif !important;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+html[data-booking-style="editorial"] [data-testid="booker-container"] {
+  border: 1px solid #1f1a15 !important;
+  box-shadow: none !important;
+}
+html[data-booking-style="editorial"] [class*="shadow"] {
+  box-shadow: none !important;
+}
+
+/* ------------------------------------------------------------
+   TERMINAL — retro CRT: black screen, phosphor-green monospace,
+   zero radius, glow, scanlines, JetBrains Mono
+   ------------------------------------------------------------ */
+html[data-booking-style="terminal"] {
+  --font-sans: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+  --font-cal: "JetBrains Mono", ui-monospace, "Courier New", monospace;
+
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-2xl: 0px;
+  --radius-3xl: 0px;
+  --radius-cal-sm: 0px;
+  --radius-cal: 0px;
+  --radius-cal-md: 0px;
+  --radius-cal-lg: 0px;
+  --radius-cal-xl: 0px;
+  --radius-cal-2xl: 0px;
+  --radius-cal-3xl: 0px;
+
+  --cal-bg: #050a05;
+  --cal-bg-subtle: #0a140a;
+  --cal-bg-muted: #071007;
+  --cal-bg-emphasis: #11301a;
+  --cal-bg-inverted: #33ff66;
+
+  --cal-text: #33ff66;
+  --cal-text-emphasis: #8effae;
+  --cal-text-subtle: #28cc52;
+  --cal-text-muted: #1d9940;
+  --cal-text-inverted: #02140a;
+
+  --cal-border: #1d5c33;
+  --cal-border-subtle: #14441f;
+  --cal-border-muted: #103319;
+  --cal-border-emphasis: #33ff66;
+  --cal-border-booker: #33ff66;
+  --cal-border-booker-width: 1px;
+
+  --cal-brand: #33ff66 !important;
+  --cal-brand-emphasis: #8effae !important;
+  --cal-brand-text: #02140a !important;
+  --cal-brand-accent: #33ff66 !important;
+}
+html[data-booking-style="terminal"] body {
+  font-family: var(--font-sans) !important;
+  background: #010401;
+  color-scheme: dark;
+}
+/* CRT scanlines overlay */
+html[data-booking-style="terminal"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 40, 10, 0.18) 3px
+  );
+}
+html[data-booking-style="terminal"] [data-testid="booker-container"] {
+  border: 1px solid #33ff66 !important;
+  box-shadow: 0 0 24px rgba(51, 255, 102, 0.25), inset 0 0 60px rgba(51, 255, 102, 0.05) !important;
+}
+html[data-booking-style="terminal"] h1,
+html[data-booking-style="terminal"] h2,
+html[data-booking-style="terminal"] [data-testid="event-title"] {
+  text-shadow: 0 0 8px rgba(51, 255, 102, 0.6);
+}
+html[data-booking-style="terminal"] [data-testid="event-title"]::before {
+  content: "> ";
+}
+html[data-booking-style="terminal"] img {
+  filter: grayscale(1) sepia(1) hue-rotate(70deg) saturate(3) brightness(0.9);
+}
+html[data-booking-style="terminal"] [class*="shadow"] {
+  box-shadow: none !important;
+}

@@ -1,16 +1,18 @@
 import { FULL_NAME_LENGTH_MAX_LIMIT } from "@calcom/lib/constants";
 import { timeZoneSchema } from "@calcom/lib/dayjs/timeZone.schema";
-import { bookerLayouts, userMetadata } from "@calcom/prisma/zod-utils";
+import { bookerLayouts, bookingPageStyle, userMetadata } from "@calcom/prisma/zod-utils";
 import { z } from "zod";
 
 export type TUpdateUserMetadataAllowedKeys = {
   sessionTimeout?: number;
   defaultBookerLayouts?: z.infer<typeof bookerLayouts>;
+  bookingPageStyle?: z.infer<typeof bookingPageStyle>;
 };
 
 export const updateUserMetadataAllowedKeys: z.ZodType<TUpdateUserMetadataAllowedKeys> = z.object({
   sessionTimeout: z.number().optional(), // Minutes
   defaultBookerLayouts: bookerLayouts.optional(),
+  bookingPageStyle: bookingPageStyle.optional(),
 });
 
 export type TUpdateProfileInputSchemaInput = {

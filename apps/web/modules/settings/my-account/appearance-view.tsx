@@ -18,7 +18,7 @@ import useGetBrandingColours from "@calcom/lib/getBrandColours";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import useTheme from "@calcom/lib/hooks/useTheme";
 import { validateBookerLayouts } from "@calcom/lib/validateBookerLayouts";
-import type { userMetadata } from "@calcom/prisma/zod-utils";
+import type { bookingPageStyle, userMetadata } from "@calcom/prisma/zod-utils";
 import { trpc } from "@calcom/trpc/react";
 import type { RouterOutputs } from "@calcom/trpc/react";
 import { Alert } from "@calcom/ui/components/alert";
@@ -27,6 +27,83 @@ import { SettingsToggle, ColorPicker, Form } from "@calcom/ui/components/form";
 import { showToast } from "@calcom/ui/components/toast";
 import { useCalcomTheme } from "@calcom/ui/styles";
 
+
+type BookingPageStyle = z.infer<typeof bookingPageStyle>;
+
+// Inline-styled mini previews so each card shows the actual look of its theme
+const BOOKING_PAGE_STYLE_OPTIONS: {
+  value: BookingPageStyle;
+  previewBg: string;
+  previewCard: string;
+  previewText: string;
+  previewAccent: string;
+  previewBorder: string;
+  previewBorderWidth: number;
+  previewRadius: number;
+  previewShadow: string;
+  previewFont: string;
+}[] = [
+  {
+    value: "classic",
+    previewBg: "#f3f4f6",
+    previewCard: "#ffffff",
+    previewText: "#111827",
+    previewAccent: "#111827",
+    previewBorder: "#e5e7eb",
+    previewBorderWidth: 1,
+    previewRadius: 6,
+    previewShadow: "0 1px 3px rgba(0,0,0,.12)",
+    previewFont: "ui-sans-serif, system-ui, sans-serif",
+  },
+  {
+    value: "brutalist",
+    previewBg: "#f4f4f0",
+    previewCard: "#ffffff",
+    previewText: "#0a0a0a",
+    previewAccent: "#ffde00",
+    previewBorder: "#0a0a0a",
+    previewBorderWidth: 2,
+    previewRadius: 0,
+    previewShadow: "4px 4px 0 #0a0a0a",
+    previewFont: "ui-sans-serif, system-ui, sans-serif",
+  },
+  {
+    value: "aurora",
+    previewBg: "linear-gradient(135deg,#0f0c29,#302b63 70%,#24243e)",
+    previewCard: "rgba(255,255,255,.12)",
+    previewText: "#ece9ff",
+    previewAccent: "#8b5cf6",
+    previewBorder: "rgba(255,255,255,.35)",
+    previewBorderWidth: 1,
+    previewRadius: 12,
+    previewShadow: "0 8px 24px rgba(76,29,149,.5)",
+    previewFont: "ui-sans-serif, system-ui, sans-serif",
+  },
+  {
+    value: "editorial",
+    previewBg: "#f3ecdd",
+    previewCard: "#faf6ee",
+    previewText: "#1f1a15",
+    previewAccent: "#7a2828",
+    previewBorder: "#1f1a15",
+    previewBorderWidth: 1,
+    previewRadius: 2,
+    previewShadow: "none",
+    previewFont: "Georgia, 'Times New Roman', serif",
+  },
+  {
+    value: "terminal",
+    previewBg: "#010401",
+    previewCard: "#050a05",
+    previewText: "#33ff66",
+    previewAccent: "#33ff66",
+    previewBorder: "#33ff66",
+    previewBorderWidth: 1,
+    previewRadius: 0,
+    previewShadow: "0 0 12px rgba(51,255,102,.35)",
+    previewFont: "ui-monospace, 'Courier New', monospace",
+  },
+];
 
 const useBrandColors = (
   currentTheme: string | null,
@@ -65,6 +142,10 @@ const AppearanceView = ({
     user?.brandColor !== DEFAULT_LIGHT_BRAND_COLOR || user?.darkBrandColor !== DEFAULT_DARK_BRAND_COLOR
   );
   const [hideBrandingValue, setHideBrandingValue] = useState(user?.hideBranding ?? false);
+  const savedBookingPageStyle =
+    (user.metadata as z.infer<typeof userMetadata>)?.bookingPageStyle ?? "classic";
+  const [bookingPageStyleValue, setBookingPageStyleValue] =
+    useState<BookingPageStyle>(savedBookingPageStyle);
   useTheme(user?.appTheme);
   useBrandColors(user?.appTheme ?? null, {
     brandColor: user?.brandColor,
@@ -284,6 +365,96 @@ const AppearanceView = ({
               user={user}
             />
           </Form>
+
+          <div className="border-subtle mt-6 flex items-center rounded-t-lg border p-6 text-sm">
+            <div>
+              <p className="text-default text-base font-semibold">{t("booking_page_style")}</p>
+              <p className="text-default">{t("booking_page_style_description")}</p>
+            </div>
+          </div>
+          <div className="border-subtle grid grid-cols-1 gap-4 border-x px-6 py-8 sm:grid-cols-3 lg:grid-cols-5">
+            {BOOKING_PAGE_STYLE_OPTIONS.map((style) => {
+              const isSelected = bookingPageStyleValue === style.value;
+              return (
+                <label
+                  key={style.value}
+                  data-testid={`booking-page-style-${style.value}`}
+                  className={`cursor-pointer rounded-lg border p-2 transition ${
+                    isSelected
+                      ? "border-emphasis ring-emphasis ring-2"
+                      : "border-subtle hover:border-emphasis"
+                  }`}>
+                  <input
+                    type="radio"
+                    name="bookingPageStyle"
+                    value={style.value}
+                    checked={isSelected}
+                    onChange={() => setBookingPageStyleValue(style.value)}
+                    className="sr-only"
+                  />
+                  <div
+                    className="h-24 w-full overflow-hidden rounded-md"
+                    style={{ background: style.previewBg }}>
+                    <div
+                      style={{
+                        background: style.previewCard,
+                        border: `${style.previewBorderWidth}px solid ${style.previewBorder}`,
+                        borderRadius: style.previewRadius,
+                        boxShadow: style.previewShadow,
+                        margin: 10,
+                        padding: 8,
+                      }}>
+                      <div
+                        style={{
+                          fontFamily: style.previewFont,
+                          color: style.previewText,
+                          fontSize: 12,
+                          fontWeight: 700,
+                          lineHeight: 1,
+                        }}>
+                        Aa
+                      </div>
+                      <div
+                        style={{
+                          height: 4,
+                          width: "65%",
+                          background: style.previewText,
+                          opacity: 0.35,
+                          borderRadius: Math.max(style.previewRadius / 2, 0),
+                          marginTop: 6,
+                        }}
+                      />
+                      <div
+                        style={{
+                          height: 10,
+                          width: "45%",
+                          background: style.previewAccent,
+                          borderRadius: Math.max(style.previewRadius / 2, 0),
+                          marginTop: 7,
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <p className="text-emphasis mt-2 text-sm font-medium">
+                    {t(`booking_page_style_${style.value}`)}
+                  </p>
+                  <p className="text-subtle text-xs">{t(`booking_page_style_${style.value}_description`)}</p>
+                </label>
+              );
+            })}
+          </div>
+          <SectionBottomActions className="mb-6" align="end">
+            <Button
+              loading={mutation.isPending}
+              disabled={bookingPageStyleValue === savedBookingPageStyle}
+              color="primary"
+              data-testid="update-booking-page-style-btn"
+              onClick={() => {
+                mutation.mutate({ metadata: { bookingPageStyle: bookingPageStyleValue } });
+              }}>
+              {t("update")}
+            </Button>
+          </SectionBottomActions>
 
           <Form
             form={brandColorsFormMethods}

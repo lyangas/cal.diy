@@ -373,6 +373,7 @@ export const getPublicEvent = async (
         bookerLayouts: bookerLayoutsSchema.parse(
           firstUsersMetadata?.defaultBookerLayouts || defaultEventBookerLayouts
         ),
+        bookingPageStyle: firstUsersMetadata?.bookingPageStyle ?? null,
         ...(orgDetails
           ? {
               image: getPlaceholderAvatar(orgDetails?.logoUrl, orgDetails?.name),
@@ -641,6 +642,8 @@ export function getProfileFromEvent(event: GetProfileFromEventInput) {
       eventMetaData?.bookerLayouts ||
         (userMetaData && "defaultBookerLayouts" in userMetaData ? userMetaData.defaultBookerLayouts : null)
     ),
+    bookingPageStyle:
+      userMetaData && "bookingPageStyle" in userMetaData ? userMetaData.bookingPageStyle ?? null : null,
   };
 }
 

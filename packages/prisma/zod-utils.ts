@@ -376,6 +376,9 @@ const schemaDefaultConferencingApp = z.object({
   appLink: z.string().optional(),
 });
 
+// Booking page style — visual theme applied to the public booker (set in Settings → Appearance)
+export const bookingPageStyle = z.enum(["classic", "brutalist", "aurora", "editorial", "terminal"]);
+
 export const userMetadata = z
   .object({
     proPaidForByTeamId: z.number().optional(),
@@ -385,6 +388,7 @@ export const userMetadata = z
     sessionTimeout: z.number().optional(), // Minutes
     defaultConferencingApp: schemaDefaultConferencingApp.optional(),
     defaultBookerLayouts: bookerLayouts.optional(),
+    bookingPageStyle: bookingPageStyle.optional(),
     emailChangeWaitingForVerification: z
       .string()
       .transform((data) => data.toLowerCase())

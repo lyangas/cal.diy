@@ -32,6 +32,14 @@ export type BookerWebWrapperAtomProps = BookerProps & {
   eventData?: NonNullable<Awaited<ReturnType<typeof getPublicEvent>>>;
 };
 
+// Google Fonts query per booking page style (see apps/web/styles/booking-page-styles.css)
+const BOOKING_PAGE_STYLE_FONTS: Record<string, string> = {
+  brutalist: "family=Space+Grotesk:wght@400;500;700",
+  aurora: "family=Outfit:wght@300;400;500;600;700",
+  editorial: "family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Lora:ital,wght@0,400..700;1,400..700",
+  terminal: "family=JetBrains+Mono:ital,wght@0,400..800;1,400..800",
+};
+
 const BookerWebWrapperComponent = (props: BookerWebWrapperAtomProps): JSX.Element => {
   const router = useRouter();
   const pathname = usePathname();
@@ -195,6 +203,27 @@ const BookerWebWrapperComponent = (props: BookerWebWrapperAtomProps): JSX.Elemen
     darkBrandColor: event.data?.profile.darkBrandColor ?? DEFAULT_DARK_BRAND_COLOR,
     theme: event.data?.profile.theme,
   });
+
+  // Booking page style — apply the owner's chosen visual theme (Settings → Appearance)
+  // by tagging <html> so booking-page-styles.css overrides kick in, and load the
+  // Google Font the theme uses.
+  const bookingPageStyle = event.data?.profile.bookingPageStyle;
+  useEffect(() => {
+    if (!bookingPageStyle || bookingPageStyle === "classic") return;
+    document.documentElement.setAttribute("data-booking-style", bookingPageStyle);
+    const fontQuery = BOOKING_PAGE_STYLE_FONTS[bookingPageStyle];
+    let fontLink: HTMLLinkElement | null = null;
+    if (fontQuery) {
+      fontLink = document.createElement("link");
+      fontLink.rel = "stylesheet";
+      fontLink.href = `https://fonts.googleapis.com/css2?${fontQuery}&display=swap`;
+      document.head.appendChild(fontLink);
+    }
+    return () => {
+      document.documentElement.removeAttribute("data-booking-style");
+      fontLink?.remove();
+    };
+  }, [bookingPageStyle]);
 
   useEffect(() => {
     if (hasSession) onOverlaySwitchStateChange(true);

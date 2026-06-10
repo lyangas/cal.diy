@@ -3,6 +3,8 @@
 @import "../../../packages/config/theme/tokens.css";
 @import "../../../packages/coss-ui/src/styles/globals.css";
 @import "./raqb.css";
+/* Booking page style themes (Settings → Appearance → Booking page style) */
+@import "./booking-page-styles.css";
 
 ::-moz-selection {
   color: var(--cal-brand-text);
