@@ -148,6 +148,12 @@ html[data-booking-style="aurora"] [role="dialog"] {
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
 }
+/* Week-view: re-tint the out-of-availability stripe pattern (hardcoded as
+   Tailwind arbitrary-property classes [--disabled-gradient-*:#hex] on the grid) */
+html[data-booking-style="aurora"] [class*="--disabled-gradient-background"] {
+  --disabled-gradient-background: rgba(255, 255, 255, 0.03);
+  --disabled-gradient-foreground: rgba(255, 255, 255, 0.1);
+}
 
 /* ------------------------------------------------------------
    EDITORIAL — print magazine: cream paper, ink text, hairline
@@ -214,6 +220,10 @@ html[data-booking-style="editorial"] [data-testid="booker-container"] {
 }
 html[data-booking-style="editorial"] [class*="shadow"] {
   box-shadow: none !important;
+}
+html[data-booking-style="editorial"] [class*="--disabled-gradient-background"] {
+  --disabled-gradient-background: #f3ecdd;
+  --disabled-gradient-foreground: #e2d4ba;
 }
 
 /* ------------------------------------------------------------
@@ -299,4 +309,8 @@ html[data-booking-style="terminal"] img {
 }
 html[data-booking-style="terminal"] [class*="shadow"] {
   box-shadow: none !important;
+}
+html[data-booking-style="terminal"] [class*="--disabled-gradient-background"] {
+  --disabled-gradient-background: #050a05;
+  --disabled-gradient-foreground: #123620;
 }

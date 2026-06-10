@@ -141,7 +141,6 @@ const AppearanceView = ({
   const [isCustomBrandColorChecked, setIsCustomBranColorChecked] = useState(
     user?.brandColor !== DEFAULT_LIGHT_BRAND_COLOR || user?.darkBrandColor !== DEFAULT_DARK_BRAND_COLOR
   );
-  const [hideBrandingValue, setHideBrandingValue] = useState(user?.hideBranding ?? false);
   const savedBookingPageStyle =
     (user.metadata as z.infer<typeof userMetadata>)?.bookingPageStyle ?? "classic";
   const [bookingPageStyleValue, setBookingPageStyleValue] =
@@ -558,17 +557,15 @@ const AppearanceView = ({
         Preview
       </Button> */}
 
+          {/* Instance branding is locked on for now: toggle is read-only and branding
+              is always rendered on public pages regardless of hideBranding. */}
           <SettingsToggle
             toggleSwitchAtTheEnd={true}
             title={t("disable_cal_branding", { appName: APP_NAME })}
-            disabled={!hasPaidPlan || mutation?.isPending}
+            disabled={true}
             description={t("removes_cal_branding", { appName: APP_NAME })}
-            checked={hasPaidPlan ? hideBrandingValue : false}
+            checked={false}
             Badge={undefined}
-            onCheckedChange={(checked) => {
-              setHideBrandingValue(checked);
-              mutation.mutate({ hideBranding: checked });
-            }}
             switchContainerClassName="mt-6"
           />
         </>

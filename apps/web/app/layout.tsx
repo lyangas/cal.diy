@@ -65,11 +65,9 @@ export const metadata = {
   },
   manifest: "/site.webmanifest",
   other: {
-    "application-TileColor": "#ff0000",
+    "application-TileColor": "#1778c2",
   },
   twitter: {
-    site: "@calcom",
-    creator: "@calcom",
     card: "summary_large_image",
   },
   robots: {

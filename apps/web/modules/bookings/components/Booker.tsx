@@ -20,11 +20,14 @@ import { BookerSection } from "@calcom/features/bookings/components/Section";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { scrollIntoViewSmooth } from "@calcom/lib/browser/browser.utils";
 import {
+  APP_NAME,
   CLOUDFLARE_SITE_ID,
   CLOUDFLARE_USE_TURNSTILE_IN_BOOKER,
+  POWERED_BY_URL,
   PUBLIC_INVALIDATE_AVAILABLE_SLOTS_ON_BOOKING_FORM,
 } from "@calcom/lib/constants";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
+import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";
 import classNames from "@calcom/ui/classNames";
 import { DialogContent } from "@calcom/ui/components/dialog";
@@ -89,6 +92,7 @@ const BookerComponent = ({
   showNoAvailabilityDialog,
 }: BookerProps & WrappedBookerProps): JSX.Element | null => {
   const searchParams = useCompatSearchParams();
+  const { t } = useLocale();
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
   const [bookerState, setBookerState] = useBookerStoreContext(
     (state) => [state.state, state.setState],
@@ -552,15 +556,18 @@ const BookerComponent = ({
           </div>
         )}
 
-        {!hideBranding && (!isPlatform || isPlatformBookerEmbed) && !shouldRenderCaptcha && (
+        {/* Instance branding is always shown for now (hideBranding intentionally ignored). */}
+        {(!isPlatform || isPlatformBookerEmbed) && !shouldRenderCaptcha && (
           <m.span
             key="logo"
-            className={classNames(
-              "mb-6 mt-auto pt-6 [&_img]:h-[15px]",
-              hasDarkBackground ? "dark" : "",
-              layout === BookerLayouts.MONTH_VIEW ? "block" : "hidden"
-            )}>
-            {null}
+            className={classNames("mb-6 mt-auto block pt-6", hasDarkBackground ? "dark" : "")}>
+            <a
+              href={POWERED_BY_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="text-subtle text-xs opacity-80 transition-opacity hover:opacity-100">
+              {t("powered_by")} <span className="font-semibold">{APP_NAME}</span>
+            </a>
           </m.span>
         )}
       </div>

@@ -1,7 +1,7 @@
 {
-    "name": "Cal.diy",
-    "short_name": "Cal.diy",
-    "description": "Scheduling infrastructure for absolutely everyone.",
+    "name": "calendar.azalia",
+    "short_name": "calendar.azalia",
+    "description": "Scheduling by azalia.ai",
     "icons": [
         {
             "src": "/api/logo?type=android-chrome-192",
@@ -16,8 +16,10 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display_override": ["minimal-ui"],
+    "display_override": [
+        "minimal-ui"
+    ],
     "display": "standalone",
     "scope": "/",
-    "start_url": "/"  
+    "start_url": "/"
 }
