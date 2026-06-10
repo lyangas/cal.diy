@@ -75,8 +75,8 @@ jobs:
             NEXT_PUBLIC_WEBAPP_URL=http://localhost:3000
             NEXT_PUBLIC_API_V2_URL=http://localhost:5555/api/v2
             NEXT_PUBLIC_LICENSE_CONSENT=agree
-            DATABASE_URL=postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}
-            DATABASE_DIRECT_URL=postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}
+            DATABASE_URL=postgresql://unicorn_user:magical_password@localhost:5432/calendso
+            DATABASE_DIRECT_URL=postgresql://unicorn_user:magical_password@localhost:5432/calendso
 
       - name: Test runtime
         run: |
@@ -86,8 +86,8 @@ jobs:
 
           docker run --rm --network stack \
             -p 3000:3000 \
-            -e DATABASE_URL=postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@database/${{ env.POSTGRES_DB }} \
-            -e DATABASE_DIRECT_URL=postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@database/${{ env.POSTGRES_DB }} \
+            -e DATABASE_URL=postgresql://unicorn_user:magical_password@database/calendso \
+            -e DATABASE_DIRECT_URL=postgresql://unicorn_user:magical_password@database/calendso \
             -e NEXTAUTH_SECRET=${{ env.NEXTAUTH_SECRET }} \
             -e CALENDSO_ENCRYPTION_KEY=${{ env.CALENDSO_ENCRYPTION_KEY }} \
             $tag &
@@ -129,8 +129,8 @@ jobs:
             NEXT_PUBLIC_WEBAPP_URL=http://localhost:3000
             NEXT_PUBLIC_API_V2_URL=http://localhost:5555/api/v2
             NEXT_PUBLIC_LICENSE_CONSENT=agree
-            DATABASE_URL=postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}
-            DATABASE_DIRECT_URL=postgresql://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@localhost:5432/${{ env.POSTGRES_DB }}
+            DATABASE_URL=postgresql://unicorn_user:magical_password@localhost:5432/calendso
+            DATABASE_DIRECT_URL=postgresql://unicorn_user:magical_password@localhost:5432/calendso
 
       - name: Cleanup
         if: always()
