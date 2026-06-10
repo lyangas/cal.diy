@@ -42,7 +42,9 @@ COPY packages ./packages
 
 RUN yarn config set httpTimeout 1200000
 RUN npx turbo prune --scope=@calcom/web --scope=@calcom/trpc --docker
-RUN yarn install
+# Allow the lockfile to be updated: new app-store workspaces (e.g. telemostvideo)
+# are added without running a multi-GB local yarn install to refresh yarn.lock.
+RUN YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
 # Build and make embed servable from web/public/embed folder
 RUN yarn workspace @calcom/trpc run build
 RUN yarn --cwd packages/embeds/embed-core workspace @calcom/embed-core run build
