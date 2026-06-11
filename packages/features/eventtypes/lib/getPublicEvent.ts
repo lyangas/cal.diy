@@ -374,6 +374,7 @@ export const getPublicEvent = async (
           firstUsersMetadata?.defaultBookerLayouts || defaultEventBookerLayouts
         ),
         bookingPageStyle: firstUsersMetadata?.bookingPageStyle ?? null,
+        showOverlayCalendarToggle: firstUsersMetadata?.showOverlayCalendarToggle ?? false,
         ...(orgDetails
           ? {
               image: getPlaceholderAvatar(orgDetails?.logoUrl, orgDetails?.name),
@@ -644,6 +645,10 @@ export function getProfileFromEvent(event: GetProfileFromEventInput) {
     ),
     bookingPageStyle:
       userMetaData && "bookingPageStyle" in userMetaData ? userMetaData.bookingPageStyle ?? null : null,
+    showOverlayCalendarToggle:
+      userMetaData && "showOverlayCalendarToggle" in userMetaData
+        ? userMetaData.showOverlayCalendarToggle ?? false
+        : false,
   };
 }
 

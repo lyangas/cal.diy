@@ -145,6 +145,9 @@ const AppearanceView = ({
     (user.metadata as z.infer<typeof userMetadata>)?.bookingPageStyle ?? "classic";
   const [bookingPageStyleValue, setBookingPageStyleValue] =
     useState<BookingPageStyle>(savedBookingPageStyle);
+  const [showOverlayCalendarToggle, setShowOverlayCalendarToggle] = useState(
+    (user.metadata as z.infer<typeof userMetadata>)?.showOverlayCalendarToggle ?? false
+  );
   useTheme(user?.appTheme);
   useBrandColors(user?.appTheme ?? null, {
     brandColor: user?.brandColor,
@@ -454,6 +457,19 @@ const AppearanceView = ({
               {t("update")}
             </Button>
           </SectionBottomActions>
+
+          <div className="mt-6">
+            <SettingsToggle
+              toggleSwitchAtTheEnd={true}
+              title={t("booking_page_overlay_toggle")}
+              description={t("booking_page_overlay_toggle_description")}
+              checked={showOverlayCalendarToggle}
+              onCheckedChange={(checked) => {
+                setShowOverlayCalendarToggle(checked);
+                mutation.mutate({ metadata: { showOverlayCalendarToggle: checked } });
+              }}
+            />
+          </div>
 
           <Form
             form={brandColorsFormMethods}

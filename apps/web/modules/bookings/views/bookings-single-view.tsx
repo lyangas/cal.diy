@@ -1038,9 +1038,24 @@ export default function Success(props: PageProps) {
                     {session === null && !userIsOwner && (
                       <>
                         <hr className="border-subtle mt-8" />
-                        <div className="text-default pt-8 text-center text-xs">
-                          <a href={POWERED_BY_URL} target="_blank" rel="noreferrer">
-                            {t("powered_by")} <span className="font-semibold">{APP_NAME}</span>
+                        <div className="text-default pt-8 text-center text-sm">
+                          <a
+                            href="https://azalia.ai"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="inline-flex max-w-full items-center justify-center gap-2 opacity-90 transition-opacity hover:opacity-100">
+                            <img
+                              src="/favicon-32x32.png"
+                              alt="Azalia.ai"
+                              className="h-5 w-5 shrink-0 rounded"
+                            />
+                            <span>
+                              Сайт разработан агентством{" "}
+                              <span className="font-semibold" style={{ color: "#E63312" }}>
+                                Azalia.ai
+                              </span>{" "}
+                              — консалтинг и обучение по ИИ и аутсорс решений под ключ
+                            </span>
                           </a>
                         </div>
                       </>

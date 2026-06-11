@@ -20,14 +20,11 @@ import { BookerSection } from "@calcom/features/bookings/components/Section";
 import { Dialog } from "@calcom/features/components/controlled-dialog";
 import { scrollIntoViewSmooth } from "@calcom/lib/browser/browser.utils";
 import {
-  APP_NAME,
   CLOUDFLARE_SITE_ID,
   CLOUDFLARE_USE_TURNSTILE_IN_BOOKER,
-  POWERED_BY_URL,
   PUBLIC_INVALIDATE_AVAILABLE_SLOTS_ON_BOOKING_FORM,
 } from "@calcom/lib/constants";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
-import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";
 import classNames from "@calcom/ui/classNames";
 import { DialogContent } from "@calcom/ui/components/dialog";
@@ -92,7 +89,6 @@ const BookerComponent = ({
   showNoAvailabilityDialog,
 }: BookerProps & WrappedBookerProps): JSX.Element | null => {
   const searchParams = useCompatSearchParams();
-  const { t } = useLocale();
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
   const [bookerState, setBookerState] = useBookerStoreContext(
     (state) => [state.state, state.setState],
@@ -346,6 +342,8 @@ const BookerComponent = ({
           "text-default flex min-h-full w-full flex-col items-center",
           layout === BookerLayouts.MONTH_VIEW && !isEmbed && "my-20 ",
           layout === BookerLayouts.MONTH_VIEW ? "overflow-visible" : "overflow-clip",
+          // Reserve space for the fixed branding footer in week/column layouts
+          layout !== BookerLayouts.MONTH_VIEW && !isEmbed && "pb-12",
           `${customClassNames?.bookerWrapper}`
         )}>
         <div
@@ -381,6 +379,8 @@ const BookerComponent = ({
                   nextSlots={nextSlots}
                   renderOverlay={() => {
                     if (isEmbed) return null;
+                    // The "overlay my calendar" toggle is opt-in per user (Settings → Appearance), off by default.
+                    if (!event.data?.profile?.showOverlayCalendarToggle) return null;
                     return (
                       <OverlayCalendar
                         isOverlayCalendarEnabled={isOverlayCalendarEnabled}
@@ -556,17 +556,32 @@ const BookerComponent = ({
           </div>
         )}
 
-        {/* Instance branding is always shown for now (hideBranding intentionally ignored). */}
+        {/* Instance branding is always shown for now (hideBranding intentionally ignored).
+            In week/column layouts the footer is fixed to the bottom of the viewport so it is
+            visible without scrolling; in month view (and embeds) it stays in the normal flow. */}
         {(!isPlatform || isPlatformBookerEmbed) && !shouldRenderCaptcha && (
           <m.span
             key="logo"
-            className={classNames("mb-6 mt-auto block pt-6", hasDarkBackground ? "dark" : "")}>
+            className={classNames(
+              "block",
+              layout === BookerLayouts.MONTH_VIEW || isEmbed
+                ? "mb-6 mt-auto pt-6"
+                : "bg-default border-subtle fixed inset-x-0 bottom-0 z-30 border-t py-2.5 text-center",
+              hasDarkBackground ? "dark" : ""
+            )}>
             <a
-              href={POWERED_BY_URL}
+              href="https://azalia.ai"
               target="_blank"
               rel="noreferrer"
-              className="text-subtle text-xs opacity-80 transition-opacity hover:opacity-100">
-              {t("powered_by")} <span className="font-semibold">{APP_NAME}</span>
+              className="text-default inline-flex max-w-full items-center justify-center gap-2 px-4 text-sm opacity-90 transition-opacity hover:opacity-100">
+              <img src="/favicon-32x32.png" alt="Azalia.ai" className="h-5 w-5 shrink-0 rounded" />
+              <span>
+                Сайт разработан агентством{" "}
+                <span className="font-semibold" style={{ color: "#E63312" }}>
+                  Azalia.ai
+                </span>{" "}
+                — консалтинг и обучение по ИИ и аутсорс решений под ключ
+              </span>
             </a>
           </m.span>
         )}

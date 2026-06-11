@@ -389,6 +389,8 @@ export const userMetadata = z
     defaultConferencingApp: schemaDefaultConferencingApp.optional(),
     defaultBookerLayouts: bookerLayouts.optional(),
     bookingPageStyle: bookingPageStyle.optional(),
+    // Show the "overlay my calendar" toggle on the public booking page (off by default)
+    showOverlayCalendarToggle: z.boolean().optional(),
     emailChangeWaitingForVerification: z
       .string()
       .transform((data) => data.toLowerCase())

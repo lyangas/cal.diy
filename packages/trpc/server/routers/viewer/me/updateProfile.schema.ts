@@ -7,12 +7,14 @@ export type TUpdateUserMetadataAllowedKeys = {
   sessionTimeout?: number;
   defaultBookerLayouts?: z.infer<typeof bookerLayouts>;
   bookingPageStyle?: z.infer<typeof bookingPageStyle>;
+  showOverlayCalendarToggle?: boolean;
 };
 
 export const updateUserMetadataAllowedKeys: z.ZodType<TUpdateUserMetadataAllowedKeys> = z.object({
   sessionTimeout: z.number().optional(), // Minutes
   defaultBookerLayouts: bookerLayouts.optional(),
   bookingPageStyle: bookingPageStyle.optional(),
+  showOverlayCalendarToggle: z.boolean().optional(),
 });
 
 export type TUpdateProfileInputSchemaInput = {
